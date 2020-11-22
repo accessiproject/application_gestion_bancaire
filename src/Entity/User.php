@@ -45,7 +45,7 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $birthat;
 
@@ -156,18 +156,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getBirthat(): ?\DateTimeInterface
-    {
-        return $this->birthat;
-    }
-
-    public function setBirthat(\DateTimeInterface $birthat): self
-    {
-        $this->birthat = $birthat;
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -191,4 +179,17 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getBirthat(): ?\DateTimeInterface
+    {
+        return $this->birthat;
+    }
+
+    public function setBirthat(\DateTimeInterface $birthat): self
+    {
+        $this->birthat = $birthat;
+
+        return $this;
+    }
+
 }
