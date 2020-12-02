@@ -1,0 +1,9 @@
+{% if is_granted('ROLE_ADMIN') %}
+	<nav>
+		<ul>
+			<li>
+				<a class="btn btn-primary" href="{{ path('user_index') }}">Gérer les comptes utilisateurs</a>
+			</li>
+		</ul>
+	</nav>
+{% endif %}
