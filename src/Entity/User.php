@@ -58,6 +58,11 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $createdat;
+	
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedat;
 
     public function getId(): ?int
     {
@@ -191,5 +196,18 @@ class User implements UserInterface
 
         return $this;
     }
+	
+	   public function getUpdatedat(): ?\DateTimeInterface
+    {
+        return $this->updatedat;
+    }
+
+    public function setUpdatedat(\DateTimeInterface $updatedat): self
+    {
+        $this->updatedat = $updatedat;
+
+        return $this;
+    }
+
 
 }
