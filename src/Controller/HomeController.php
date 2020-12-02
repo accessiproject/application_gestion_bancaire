@@ -11,7 +11,7 @@ class HomeController extends AbstractController
 {
     /** 
     * @Route("/accueil", name="home_index")
-    * @IsGranted("ROLE_ADMIN")
+	* @IsGranted("ROLE_USER")
      */
     public function home_index()
     {

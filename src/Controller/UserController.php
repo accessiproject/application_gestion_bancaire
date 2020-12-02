@@ -8,12 +8,14 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class UserController extends AbstractController
 {
 
     /**
      * @Route("/admin/user/index", name="user_index")
+	 * @IsGranted("ROLE_ADMIN")
      */
     public function user_index()
     {

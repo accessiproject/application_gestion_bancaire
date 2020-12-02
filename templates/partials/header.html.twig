@@ -1,8 +1,13 @@
-{% if is_granted('ROLE_ADMIN') %}
+{% if is_granted('ROLE_USER') %}
 	<nav>
 		<ul>
+			{% if is_granted('ROLE_ADMIN') %}
+				<li>
+					<a class="btn btn-primary" href="{{ path('user_index') }}">Gérer les comptes utilisateurs</a>
+				</li>
+			{% endif %}
 			<li>
-				<a class="btn btn-primary" href="{{ path('user_index') }}">Gérer les comptes utilisateurs</a>
+				<a href="{{ path('app_logout') }}">Déconnexion</a>
 			</li>
 		</ul>
 	</nav>
