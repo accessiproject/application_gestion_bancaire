@@ -208,6 +208,16 @@ class User implements UserInterface
 
         return $this;
     }
-
-
+	
+	   /**
+    * @ORM\PrePersist
+    * @ORM\PreUpdate
+    */
+    public function updatedTimestamps(): void {
+        $dateTimeNow = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $this->setUpdatedat($dateTimeNow);
+        if ($this->getCreatedat() === null) {
+            $this->setCreatedat($dateTimeNow);
+        }
+    }
 }

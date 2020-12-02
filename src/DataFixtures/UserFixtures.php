@@ -26,17 +26,18 @@ class UserFixtures extends Fixture
         $faker = Faker\Factory::create('fr_FR');
 
         //creation users
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $user = new User();
             $user->setFirstname($faker->firstName);
             $user->setLastname($faker->lastName);
             $user->setUsername("kevin$i");
             $user->setBirthat(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             $user->setEmail("test$i@test.fr");
-            $user->setRoles(["ROLE_ADMIN"]);
+			$role = $i<=5 ? ["ROLE_ADMIN"] : ["ROLE_USER"];
+            $user->setRoles($role);
             $password = $this->encoder->encodePassword($user, 'kevin');
             $user->setPassword($password);
-            $user->setCreatedat(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
+            $user->updatedTimestamps();
             $manager->persist($user); //persistence an user object
             $manager->flush(); //save the users in the database 
         }
