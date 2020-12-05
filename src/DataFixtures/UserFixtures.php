@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use Faker;
+use App\Entity\Beneficiary;
 use App\Entity\User;
 use App\Entity\Account;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -11,7 +12,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
-    
+
 
     private $encoder;
 
@@ -36,28 +37,36 @@ class UserFixtures extends Fixture
             $user->setUsername("kevin$i");
             $user->setBirthat(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             $user->setEmail("test$i@test.fr");
-            $role = $i<=5 ? ["ROLE_ADMIN"] : ["ROLE_USER"];
+            $role = $i <= 5 ? ["ROLE_ADMIN"] : ["ROLE_USER"];
             $user->setRoles($role);
             $password = $this->encoder->encodePassword($user, 'kevin');
             $user->setPassword($password);
             $user->updatedTimestamps();
             $manager->persist($user); //persistence an user object
-            
-            $tabaccounts=["Compte Courant","Livret A","Plan Épargne Logement","Livret Développement Durable (LDD)"];
-            for ($j = 0; $j < count($tabaccounts); $j++)
-            {
+
+            $tabaccounts = ["Compte Courant", "Livret A", "Plan Épargne Logement", "Livret Développement Durable (LDD)"];
+            for ($j = 0; $j < count($tabaccounts); $j++) {
                 $account = new Account();
                 $account->setName($tabaccounts[$j]);
-                
-                if ($tabaccounts[$j]=="Compte Courant")
+
+                if ($tabaccounts[$j] == "Compte Courant")
                     $account->setIban($faker->iban);
-                    
+
                 $account->setBalance(30000);
                 $account->updatedTimestamps();
                 $account->setUser($user);
                 $manager->persist($account);
             }
-            $manager->flush(); //save the users in the database 
+            $manager->flush();
+        }
+        for ($i = 0; $i < 5; $i++) {
+            $beneficiary = new Beneficiary();
+            $beneficiary->setFirstname($faker->firstname);
+            $beneficiary->setLastname($faker->lastname);
+            $beneficiary->setIban($faker->iban);
+            $beneficiary->updatedTimestamps();
+            $manager->persist($beneficiary);
+            $manager->flush();
         }
     }
 }

@@ -72,9 +72,10 @@ class User implements UserInterface
     private $accounts;
 
     /**
-     * @ORM\OneToMany(targetEntity=Beneficiary::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Beneficiary::class, mappedBy="user", orphanRemoval=true)
      */
     private $beneficiaries;
+	
 
     public function __construct()
     {
@@ -298,4 +299,6 @@ class User implements UserInterface
 
         return $this;
     }
+
+    
 }

@@ -18,12 +18,12 @@ class Beneficiary
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $firstname;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $lastname;
 
@@ -44,8 +44,11 @@ class Beneficiary
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="beneficiaries")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    
 
     public function getId(): ?int
     {
@@ -112,17 +115,7 @@ class Beneficiary
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
+    
 	
 	   /**
     * @ORM\PrePersist
@@ -134,6 +127,18 @@ class Beneficiary
         if ($this->getCreatedat() === null) {
             $this->setCreatedat($dateTimeNow);
         }
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 	
 	

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201122130046 extends AbstractMigration
+final class Version20201205214353 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -20,12 +20,12 @@ final class Version20201122130046 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user CHANGE birthat birthat DATETIME NOT NULL');
+        $this->addSql('DROP INDEX UNIQ_7ABF446AFAD56E62 ON beneficiary');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user CHANGE birthat birthat DATE NOT NULL');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_7ABF446AFAD56E62 ON beneficiary (iban)');
     }
 }
