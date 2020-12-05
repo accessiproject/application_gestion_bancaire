@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use Faker;
 use App\Entity\User;
+use App\Entity\Account;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -15,12 +16,14 @@ class UserFixtures extends Fixture
     private $encoder;
 
     //constructor with one argument: the service UserPasswordEncoderInterface 
-    public function __construct(UserPasswordEncoderInterface $encoder) {
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
         $this->encoder = $encoder;
     }
 
     //method for loading test data
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager)
+    {
         //initialization object Faker
         //configure the location, to have "French" data
         $faker = Faker\Factory::create('fr_FR');
@@ -33,14 +36,28 @@ class UserFixtures extends Fixture
             $user->setUsername("kevin$i");
             $user->setBirthat(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             $user->setEmail("test$i@test.fr");
-			$role = $i<=5 ? ["ROLE_ADMIN"] : ["ROLE_USER"];
+            $role = $i<=5 ? ["ROLE_ADMIN"] : ["ROLE_USER"];
             $user->setRoles($role);
             $password = $this->encoder->encodePassword($user, 'kevin');
             $user->setPassword($password);
             $user->updatedTimestamps();
             $manager->persist($user); //persistence an user object
+            
+            $tabaccounts=["Compte Courant","Livret A","Plan Épargne Logement","Livret Développement Durable (LDD)"];
+            for ($j = 0; $j < count($tabaccounts); $j++)
+            {
+                $account = new Account();
+                $account->setName($tabaccounts[$j]);
+                
+                if ($tabaccounts[$j]=="Compte Courant")
+                    $account->setIban($faker->iban);
+                    
+                $account->setBalance(30000);
+                $account->updatedTimestamps();
+                $account->setUser($user);
+                $manager->persist($account);
+            }
             $manager->flush(); //save the users in the database 
         }
     }
-
 }
