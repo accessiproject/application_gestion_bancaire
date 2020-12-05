@@ -71,9 +71,15 @@ class User implements UserInterface
      */
     private $accounts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Beneficiary::class, mappedBy="user")
+     */
+    private $beneficiaries;
+
     public function __construct()
     {
         $this->accounts = new ArrayCollection();
+        $this->beneficiaries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -257,6 +263,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($account->getUser() === $this) {
                 $account->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Beneficiary[]
+     */
+    public function getBeneficiaries(): Collection
+    {
+        return $this->beneficiaries;
+    }
+
+    public function addBeneficiary(Beneficiary $beneficiary): self
+    {
+        if (!$this->beneficiaries->contains($beneficiary)) {
+            $this->beneficiaries[] = $beneficiary;
+            $beneficiary->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBeneficiary(Beneficiary $beneficiary): self
+    {
+        if ($this->beneficiaries->removeElement($beneficiary)) {
+            // set the owning side to null (unless already changed)
+            if ($beneficiary->getUser() === $this) {
+                $beneficiary->setUser(null);
             }
         }
 
