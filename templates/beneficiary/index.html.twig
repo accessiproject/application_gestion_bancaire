@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Beneficiary index{% endblock %}
+
+{% block body %}
+    <h1>Beneficiary index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Iban</th>
+                <th>Updatedat</th>
+                <th>Createdat</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for beneficiary in beneficiaries %}
+            <tr>
+                <td>{{ beneficiary.id }}</td>
+                <td>{{ beneficiary.firstname }}</td>
+                <td>{{ beneficiary.lastname }}</td>
+                <td>{{ beneficiary.iban }}</td>
+                <td>{{ beneficiary.updatedat ? beneficiary.updatedat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ beneficiary.createdat ? beneficiary.createdat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('beneficiary_show', {'id': beneficiary.id}) }}">show</a>
+                    <a href="{{ path('beneficiary_edit', {'id': beneficiary.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('beneficiary_new') }}">Create new</a>
+{% endblock %}
