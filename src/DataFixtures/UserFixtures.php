@@ -57,15 +57,15 @@ class UserFixtures extends Fixture
                 $account->setUser($user);
                 $manager->persist($account);
             }
-            $manager->flush();
-        }
-        for ($i = 0; $i < 5; $i++) {
-            $beneficiary = new Beneficiary();
-            $beneficiary->setFirstname($faker->firstname);
-            $beneficiary->setLastname($faker->lastname);
-            $beneficiary->setIban($faker->iban);
-            $beneficiary->updatedTimestamps();
-            $manager->persist($beneficiary);
+            for ($j = 0; $j < 5; $j++) {
+                $beneficiary = new Beneficiary();
+                $beneficiary->setFirstname($faker->firstname);
+                $beneficiary->setLastname($faker->lastname);
+                $beneficiary->setIban($faker->iban);
+                $beneficiary->updatedTimestamps();
+                $beneficiary->setUser($user);
+                $manager->persist($beneficiary);
+            }
             $manager->flush();
         }
     }
