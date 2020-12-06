@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use Faker;
 use App\Entity\Beneficiary;
 use App\Entity\User;
+use App\Entity\Transaction;
 use App\Entity\Account;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -44,19 +45,6 @@ class UserFixtures extends Fixture
             $user->updatedTimestamps();
             $manager->persist($user); //persistence an user object
 
-            $tabaccounts = ["Compte Courant", "Livret A", "Plan Épargne Logement", "Livret Développement Durable (LDD)"];
-            for ($j = 0; $j < count($tabaccounts); $j++) {
-                $account = new Account();
-                $account->setName($tabaccounts[$j]);
-
-                if ($tabaccounts[$j] == "Compte Courant")
-                    $account->setIban($faker->iban);
-
-                $account->setBalance(30000);
-                $account->updatedTimestamps();
-                $account->setUser($user);
-                $manager->persist($account);
-            }
             for ($j = 0; $j < 5; $j++) {
                 $beneficiary = new Beneficiary();
                 $beneficiary->setFirstname($faker->firstname);
@@ -65,6 +53,30 @@ class UserFixtures extends Fixture
                 $beneficiary->updatedTimestamps();
                 $beneficiary->setUser($user);
                 $manager->persist($beneficiary);
+            }
+
+            $tabaccounts = ["Compte Courant", "Livret A", "Plan Épargne Logement", "Livret Développement Durable (LDD)"];
+            for ($j = 0; $j < count($tabaccounts); $j++) {
+                $account = new Account();
+                $account->setName($tabaccounts[$j]);
+
+                if ($tabaccounts[$j] == "Compte Courant")
+                    $account->setIban($faker->iban);
+
+                $account->setBalance(5000);
+                $account->updatedTimestamps();
+                $account->setUser($user);
+                $manager->persist($account);
+
+                for ($j = 0; $j < 5; $j++) {
+                    $transaction = new Transaction();
+                    $transaction->setUser($user);
+                    $transaction->setAccount($account);
+                    $transaction->setLabel($faker->word);
+                    $transaction->setCredit(5000);
+                    $transaction->setAchievedat(new \DateTime());
+                    $manager->persist($transaction);
+                }
             }
             $manager->flush();
         }
