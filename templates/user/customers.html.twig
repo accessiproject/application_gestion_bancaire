@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des clients{% endblock %}
+
+{% block body %}
+<h1>Gestion des clients</h1>
+<p><a href="{{ path('user_new') }}">Ajouter un client</a></p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Login</th>
+            <th>Adresse email</th>
+            <th>N° téléphone</th>
+            <th>Créé</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>
+                {{ user.gender ? "M." : "Mme" }} {{ user.firstname }} {{ user.lastname }}</br>
+                Né le {{ user.birthat|date('d/m/Y') }}
+            </td>
+            <td>{{ user.username }}</td>
+            <td>
+                <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+            </td>
+            <td>
+                <a href="tel:{{ user.phone }}">{{ user.phone }}</a>
+            </td>
+            <td>{{ user.createdat|date('d/m/Y H:i') }}</td>
+            <td>
+                <a href="{{ path('user_show', {'id': user.id}) }}">Voir</a>
+                <a href="{{ path('user_edit', {'id': user.id}) }}">Modifier</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6">Aucun client enregistré.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

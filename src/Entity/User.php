@@ -80,6 +80,16 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Transaction::class, mappedBy="user")
      */
     private $transactions;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $gender;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $phone;
 	
 
     public function __construct()
@@ -332,6 +342,30 @@ class User implements UserInterface
                 $transaction->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGender(): ?bool
+    {
+        return $this->gender;
+    }
+
+    public function setGender(bool $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
 
         return $this;
     }

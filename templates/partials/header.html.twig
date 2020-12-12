@@ -3,7 +3,10 @@
 		<ul>
 			{% if is_granted('ROLE_ADMIN') %}
 				<li>
-					<a class="btn btn-primary" href="{{ path('user_index') }}">Gérer les comptes utilisateurs</a>
+					<a href="{{ path('user_advisers') }}">Gérer les chargés de clientèle</a>
+				</li>
+				<li>
+					<a href="{{ path('user_customers') }}">Gérer les clients</a>
 				</li>
 			{% endif %}
 			<li>

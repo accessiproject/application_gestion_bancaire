@@ -33,11 +33,13 @@ class UserFixtures extends Fixture
         //creation users
         for ($i = 1; $i <= 10; $i++) {
             $user = new User();
+            $user->setGender(true);
             $user->setFirstname($faker->firstName);
             $user->setLastname($faker->lastName);
             $user->setUsername("kevin$i");
             $user->setBirthat(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             $user->setEmail("test$i@test.fr");
+            $user->setPhone($faker->phoneNumber);
             $role = $i <= 5 ? ["ROLE_ADMIN"] : ["ROLE_USER"];
             $user->setRoles($role);
             $password = $this->encoder->encodePassword($user, 'kevin');
