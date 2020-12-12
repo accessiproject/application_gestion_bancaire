@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonSearch;
 
 class UserController extends AbstractController
 {
@@ -21,11 +22,10 @@ class UserController extends AbstractController
     {
         if ($_route == "user_advisers") {
             $render = "user/advisers.html.twig";
-            $x['roles'] = array("ROLE_ADMIN");
-            $users = $this->getDoctrine()->getRepository(User::class)->findBy($x);
+            $users = $this->getDoctrine()->getRepository(User::class)->findByRoleThatSucksLess("ADVISER");
         } else {
             $render = "user/customers.html.twig";
-            $users = $this->getDoctrine()->getRepository(User::class)->findBy(['roles' => ["ROLE_USER"]]);
+            $users = $this->getDoctrine()->getRepository(User::class)->findByRoleThatSucksLess("USER");
         }
         return $this->render($render, [
             'users' => $users,
