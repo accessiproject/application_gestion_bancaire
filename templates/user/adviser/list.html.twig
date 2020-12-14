@@ -1,19 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion des clients{% endblock %}
+{% block title %}Gestion des chargés de clientèle{% endblock %}
 
 {% block body %}
-<h1>Gestion des clients</h1>
-<p><a href="{{ path('user_new') }}">Ajouter un client</a></p>
+<h1>Gestion des chargés de clientèle</h1>
+<p><a href="{{ path('user_adviser_new') }}">Ajouter un chargé de clientèle</a></p>
 <table class="table">
     <thead>
         <tr>
-            <th>Client</th>
+            <th>Chargé de clientèle</th>
             <th>Login</th>
             <th>Adresse email</th>
             <th>N° téléphone</th>
             <th>Créé</th>
-            <th>Actions</th>
+            <th>Voir</th>
+            <th>Modifier</th>
+            <th>Supprimer</th>
         </tr>
     </thead>
     <tbody>
@@ -32,13 +34,18 @@
             </td>
             <td>{{ user.createdat|date('d/m/Y H:i') }}</td>
             <td>
-                <a href="{{ path('user_show', {'id': user.id}) }}">Voir</a>
-                <a href="{{ path('user_edit', {'id': user.id}) }}">Modifier</a>
+                <a href="{{ path('user_adviser_show', {'id': user.id}) }}">Voir</a>
+            </td>
+            <td>
+                <a href="{{ path('user_adviser_edit', {'id': user.id}) }}">Modifier</a>
+            </td>
+            <td>
+                {{ include('user/partials/_delete_form.html.twig') }}
             </td>
         </tr>
         {% else %}
         <tr>
-            <td colspan="6">Aucun client enregistré.</td>
+            <td colspan="8">Aucun client enregistré.</td>
         </tr>
         {% endfor %}
     </tbody>

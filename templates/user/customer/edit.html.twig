@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification d'un client{% endblock %}
+
+{% block body %}
+    <h1>Modification d'un client</h1>
+
+    {{ include('user/partials/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('user_customer_list') }}">Retour</a>
+
+    {{ include('user/partials/_delete_form.html.twig') }}
+{% endblock %}

@@ -40,7 +40,7 @@ class UserFixtures extends Fixture
             $user->setBirthat(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             $user->setEmail("test$i@test.fr");
             $user->setPhone($faker->phoneNumber);
-            $role = $i <= 5 ? ["ROLE_ADMIN"] : ["ROLE_USER"];
+            $role = $i <= 5 ? ["ROLE_ADMIN"] : ["ROLE_CUSTOMER"];
             $user->setRoles($role);
             $password = $this->encoder->encodePassword($user, 'kevin');
             $user->setPassword($password);

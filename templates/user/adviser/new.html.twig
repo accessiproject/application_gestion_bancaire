@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'un chargé de clientèle{% endblock %}
+
+{% block body %}
+    <h1>Création d'un chargé de clientèle</h1>
+    {{ include('user/partials/_form.html.twig') }}
+    <p><a href="{{ path('user_adviser_list') }}">Retour</a></p>
+{% endblock %}
