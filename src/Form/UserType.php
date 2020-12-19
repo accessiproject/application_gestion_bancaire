@@ -29,6 +29,7 @@ class UserType extends AbstractType
                 ],
                 'expanded' => true,
                 'multiple' => false,
+                'data' => true,
         ])
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
@@ -71,12 +72,13 @@ class UserType extends AbstractType
                     'placeholder' => 'Login',
                 ],
             ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe',
-                'attr' => [
-                    'required' => true,
-                    'placeholder' => 'Mot de passe',
-                ]
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'password-field']],
+                'required' => true,
+                'first_options'  => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmation du mot de passe'],
             ]);
             
         if ($options['adviser']) {

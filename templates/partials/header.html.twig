@@ -1,16 +1,43 @@
-{% if is_granted('ROLE_USER') %}
+{% if app.user %}
+<nav>
+	<ul>
+		<li>
+			<a href="{{ path('home_index') }}">Accueil</a>
+		</li>
+		<li>
+			<a href="">Mon profil {{ app.user.username }}</a>
+		</li>
+		{% if is_granted('ROLE_ADMIN') %}
+		<li>
+			<a href="{{ path('user_adviser_list') }}">Gérer les chargés de clientèle</a>
+		</li>
+		{% endif %}
+		{% if is_granted('ROLE_ADVISER') %}
+		<li>
+			<a href="{{ path('user_customer_list') }}">Gérer les clients</a>
+		</li>
+		<li>
+			<a href="">Rechercher un client</a>
+		</li>
+		{% endif %}
+		{% if app.user.roles|json_encode == '["ROLE_CUSTOMER","ROLE_USER"]' %}
+		<li>
+			<a href="">Mes comptes bancaires</a>
+		</li>
+		<li>
+			<a href="">Gérer les bénéficiaires enregistrés</a>
+		</li>
+		{% endif %}
+		<li>
+			<a href="{{ path('app_logout') }}">Déconnexion</a>
+		</li>
+	</ul>
+</nav>
+{% else %}
 	<nav>
 		<ul>
-			{% if is_granted('ROLE_ADMIN') %}
-				<li>
-					<a href="{{ path('user_adviser_list') }}">Gérer les chargés de clientèle</a>
-				</li>
-				<li>
-					<a href="{{ path('user_customer_list') }}">Gérer les clients</a>
-				</li>
-			{% endif %}
 			<li>
-				<a href="{{ path('app_logout') }}">Déconnexion</a>
+				<a href="{{ path('home_index') }}">Accueil</a>
 			</li>
 		</ul>
 	</nav>

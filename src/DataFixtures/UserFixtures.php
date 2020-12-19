@@ -65,7 +65,7 @@ class UserFixtures extends Fixture
                 if ($tabaccounts[$j] == "Compte Courant")
                     $account->setIban($faker->iban);
 
-                $account->setBalance(5000);
+                $account->setBalance(30000);
                 $account->updatedTimestamps();
                 $account->setUser($user);
                 $manager->persist($account);

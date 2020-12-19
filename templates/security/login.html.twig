@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Espace d'authentification{% endblock %}
 
 {% block body %}
 <form method="post">
@@ -36,7 +36,8 @@
     #}
 
     <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
+        Se connecter
     </button>
 </form>
+<p><a href="{{ path('user_new') }}">Créer un compte client</a></p>
 {% endblock %}
