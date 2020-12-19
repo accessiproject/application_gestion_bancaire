@@ -86,10 +86,7 @@ class UserController extends AbstractController
      */
     public function user_show($_route, User $user): Response
     {
-        if ($_route == "user_adviser_show")
-    $render = 'user/adviser/show.html.twig';
-        else
-             $render = 'user/customer/show.html.twig';
+        $render = $_route == "user_adviser_show" ? 'user/adviser/show.html.twig' : 'user/customer/show.html.twig';
         return $this->render($render, [
             'user' => $user,
         ]);
