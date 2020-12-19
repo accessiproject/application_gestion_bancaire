@@ -81,7 +81,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/adviser/show/{id}", name="user_adviser_show")
-     * @Route("/customer/show/{id}", name="user_customer_show")
+     * @Route("/adviser/customer/show/{id}", name="user_customer_show")
      * @param $_route
      */
     public function user_show($_route, User $user): Response
@@ -106,23 +106,22 @@ class UserController extends AbstractController
 
     /**
      * @Route("/adviser/edit/{id}", name="user_adviser_edit")
-     * @Route("/customer/edit/{id}", name="user_customer_edit")
-     
+     * @Route("/adviser/customer/edit/{id}", name="user_customer_edit")
+     * @param $_route
      */
-    public function user_edit($_route, Request $request, User $user): Response
+    public function user_edit($_route, Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            //$password = $this->encoder->encodePassword($user, 'kevin');
-            //$user->setPassword($password);
+            $password = $passwordEncoder->encodePassword($user, $form->get('password')->getData());
+            $user->setPassword($password);
             $user->updatedTimestamps();
             $this->getDoctrine()->getManager()->flush();
 
-            $route = $_route == "user_adviser_new" ? 'user_adviser_list' : 'user_customer_list';
-            return $this->redirectToRoute($route);
+            $redirectroute = $_route == "user_adviser_edit" ? 'user_adviser_list' : 'user_customer_list';
+            return $this->redirectToRoute($redirectroute);
         }
 
         $render = $_route == "user_adviser_edit" ? 'user/adviser/edit.html.twig' : 'user/customer/edit.html.twig';
