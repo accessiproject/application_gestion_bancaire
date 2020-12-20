@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ouverture d'un compte bancaire – Client n°{{ user.id }} ({{ user.gender ? "M." : "Mme" }} {{ user.firstname }} {{ user.lastname }}){% endblock %}
+
+{% block body %}
+<h1>Ouverture d'un compte bancaire – Client n°{{ user.id }} ({{ user.gender ? "M." : "Mme" }} {{ user.firstname }} {{ user.lastname }})</h1>
+	{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Ouvrir ce compte bancaire') }} – Client n°{{ user.id }} ({{ user.gender ? "M." : "Mme" }} {{ user.firstname }} {{ user.lastname }})</button>
+{{ form_end(form) }}
+{% endblock %}

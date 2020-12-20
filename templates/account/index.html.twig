@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comptes bancaires{% endblock %}
+
+{% block body %}
+<h1>Comptes bancaires</h1>
+{% if is_granted('ROLE_ADVISER') %}
+	<p><a href="{{ path('account_open', {'id': id }) }}">Ouvrir un compte bancaire</a></p>
+	{% endif %}
+	{% set sum = 0 %} 
+{% for account in accounts %}
+    {% set sum = sum + account.balance %} 
+{% endfor %} 
+	<p>Montant total de l'ensemble des comptes bancaires : {{ sum }}€</p>
+<ul>
+    {% for account in accounts %}
+        <li>
+		Compte bancaire n°{{ account.id }} {{ account.name }} – {{ account.balance }}€
+		{% if is_granted('ROLE_ADVISER') %}
+			<a role="button" href="{{ path('account_delete', {'id': account.id}) }}">Supprimer</a>
+		{% endif %}
+		</li>
+    {% endfor %}
+</ul>
+{% endblock %}

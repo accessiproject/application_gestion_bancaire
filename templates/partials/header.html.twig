@@ -22,7 +22,7 @@
 		{% endif %}
 		{% if app.user.roles|json_encode == '["ROLE_CUSTOMER","ROLE_USER"]' %}
 		<li>
-			<a href="">Mes comptes bancaires</a>
+			<a href="{{ path('account_list', {'id' : app.user.id}) }}">Mes comptes bancaires</a>
 		</li>
 		<li>
 			<a href="">Gérer les bénéficiaires enregistrés</a>

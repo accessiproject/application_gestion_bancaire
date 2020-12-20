@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use Faker;
 use App\Entity\User;
+use App\Entity\Account;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -61,8 +63,18 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
 
-            if ($_route == "user_customer_new" or $_route == "user_new")
+            if ($_route == "user_customer_new" or $_route == "user_new") {
                 $user->setRoles(["ROLE_CUSTOMER"]);
+				$faker = Faker\Factory::create('fr_FR');
+				$account = new Account();
+				$account->setName("Compte courant");
+				$account->setIban($faker->iban);
+				$account->setBalance(0);
+				$account->setUser($user);
+				$account->updatedTimestamps();
+				$entityManager->persist($account);
+			}
+				
                 
             $password = $passwordEncoder->encodePassword($user, $form->get('password')->getData());
             $user->setPassword($password);
