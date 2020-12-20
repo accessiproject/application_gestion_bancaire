@@ -19,7 +19,27 @@
 		{% if is_granted('ROLE_ADVISER') %}
 			<a role="button" href="{{ path('account_delete', {'id': account.id}) }}">Supprimer</a>
 		{% endif %}
+		{% if account.transactions %}
+		<table>
+		<tr>
+		<th>N° transaction</th>
+		<th>Libellé</th>
+		<th>Débit</th>
+		<th>Crédit</th>
+		<th>Réalisé</th>
+	</tr>
+	{% for transaction in account.transactions %}
+	<tr>
+	<td>Transaction {{ transaction.id }}</td>
+	<td>{{ transaction.label }}</td>
+	<td>{{ transaction.debit }}</td>
+	<td>{{ transaction.credit }}</td>
+	<td>{{ transaction.achievedat|date("d/m/Y à H:i") }}</td>
+	</tr>
+	{% endfor %}
+	</table>
 		</li>
+		{% endif %}
     {% endfor %}
 </ul>
 {% endblock %}
