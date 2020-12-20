@@ -3,7 +3,7 @@
 {% block title %}Client n°{{ user.id }} : {{ user.gender ? "M." : "Mme" }} {{ user.firstname }} {{ user.lastname }}{% endblock %}
 
 {% block body %}
-    <h1>Client</h1>
+    <h1>Client n°{{ user.id }} : {{ user.gender ? "M." : "Mme" }} {{ user.firstname }} {{ user.lastname }}</h1>
 
     <table class="table">
         <tbody>
@@ -50,10 +50,7 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('user_customer_list') }}">Retour</a>
-
-    <a href="{{ path('user_customer_edit', {'id': user.id}) }}">Modifier</a>
-
-    <a href="{{ path('account_list', {'id': user.id}) }}">Consulter compte bancaire</a>
+    <p><a href="{{ path('user_customer_edit', {'id': user.id}) }}">Modifier les informations</a></p>
+    <p><a href="{{ path('account_list', {'id': user.id}) }}">Accéder au(x) compte(s) bancaire(s) du client</a></p>
+	<p><a href="{{ path('user_customer_list') }}">Retour</a></p>
 {% endblock %}

@@ -25,7 +25,7 @@ class UserController extends AbstractController
     {
         if ($_route == "user_adviser_list") {
             $render = "user/adviser/list.html.twig";
-            $users = $this->getDoctrine()->getRepository(User::class)->findByRoleThatSucksLess("ADVISER");
+            $users = $this->getDoctrine()->getRepository(User::class)->findByRoleThatSucksLess("ADMIN");
         } else {
             $render = "user/customer/list.html.twig";
             $users = $this->getDoctrine()->getRepository(User::class)->findByRoleThatSucksLess("CUSTOMER");

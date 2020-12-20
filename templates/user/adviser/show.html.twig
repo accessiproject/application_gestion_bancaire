@@ -4,7 +4,6 @@
 
 {% block body %}
     <h1>Chargé de clientèle</h1>
-
     <table class="table">
         <tbody>
             <tr>
@@ -50,8 +49,6 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('user_adviser_list') }}">Retour</a>
-
-    <a href="{{ path('user_adviser_edit', {'id': user.id}) }}">Modifier</a>
+    <p><a href="{{ path('user_adviser_edit', {'id': user.id}) }}">Modifier les informations</a></p>
+	<p><a href="{{ path('user_adviser_list') }}">Retour</a></p>
 {% endblock %}
