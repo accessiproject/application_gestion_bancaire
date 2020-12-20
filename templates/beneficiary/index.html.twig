@@ -4,13 +4,12 @@
 
 {% block body %}
 <h1>Gestion des bénéficiaires</h1>
-<p><a href="">Enregistrer un bénéficiaire</a></p>
+<p><a href="{{ path('beneficiary_new') }}">Enregistrer un bénéficiaire</a></p>
 <table>
 	<tr>
 		<th>Bénéficiaire</th>
 		<th>Iban</th>
 		<th>Créé</th>
-		<th>Modifier</th>
 		<th>Supprimer</th>
 	</tr>
 	{% for beneficiary in beneficiaries %}
@@ -18,7 +17,6 @@
 			<td>Bénéficiaire n°{{ beneficiary.id }} {{ beneficiary.firstname }} {{ beneficiary.lastname }}</td>
 			<td>{{ beneficiary.iban }}</td>
 			<td>{{ beneficiary.createdat|date("d/m/Y à H:i") }}</td>
-			<td><a href="">Modifier</a></td>
 			<td><a role="button" href="{{ path('beneficiary_delete', {'id' : beneficiary.id }) }}">Supprimer</a></td>
 		</tr>
 	{% endfor %}
