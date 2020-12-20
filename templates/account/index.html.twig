@@ -19,6 +19,7 @@
 		{% if is_granted('ROLE_ADVISER') %}
 			<a role="button" href="{{ path('account_delete', {'id': account.id}) }}">Supprimer</a>
 		{% endif %}
+		<p><a href="{{ path('transaction_new') }}">Effectuer une transaction</a></p>
 		{% if account.transactions %}
 		<table>
 		<tr>
