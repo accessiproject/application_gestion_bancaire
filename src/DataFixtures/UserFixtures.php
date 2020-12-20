@@ -75,6 +75,7 @@ class UserFixtures extends Fixture
                     $transaction->setUser($user);
                     $transaction->setAccount($account);
                     $transaction->setLabel($faker->word);
+					$transaction->setChoice(true);
                     $transaction->setCredit(5000);
                     $transaction->setAchievedat(new \DateTime());
                     $manager->persist($transaction);

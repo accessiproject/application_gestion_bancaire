@@ -3,31 +3,37 @@
 namespace App\Controller;
 
 use App\Entity\Transaction;
+use App\Entity\Account;
 use App\Repository\TransactionRepository;
+use App\Repository\AccountRepository;
 use App\Form\TransactionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TransactionController extends AbstractController
 {
 
 /**
-     * @Route("/customer/transactin/new", name="transaction_new")
+     * @Route("/customer/account/{account_id}/transactin/new", name="transaction_new")
      */
-    public function transaction_new(Request $request): Response
+    public function transaction_new($account_id, Request $request): Response
     {
-        
+        $account = $this->getDoctrine()->getRepository(Account::class)->find($account_id);
         $transaction = new Transaction();
-        $form = $this->createForm(TransactionType::class, $transaction);
+		$user = $this->getUser();
+        $form = $this->createForm(TransactionType::class, $transaction, [
+		'user_id' => $user->getId(),
+		'account_balance' => $account->getBalance(),
+		]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-			$user = $this->getUser();
 			$transaction->setUser($user);
-            $transactin->achievedat();
+            $transaction->achievedat();
             $entityManager->persist($transaction);
             $entityManager->flush();    
             

@@ -54,6 +54,11 @@ class Transaction
      */
     private $achievedat;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $choice;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,6 +144,18 @@ class Transaction
     public function setAchievedat(\DateTimeInterface $achievedat): self
     {
         $this->achievedat = $achievedat;
+
+        return $this;
+    }
+
+    public function getChoice(): ?bool
+    {
+        return $this->choice;
+    }
+
+    public function setChoice(bool $choice): self
+    {
+        $this->choice = $choice;
 
         return $this;
     }

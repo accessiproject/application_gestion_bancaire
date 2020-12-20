@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Effectuer une transaction{% endblock %}
+{% block title %}Réaliser un virement{% endblock %}
 
 {% block body %}
-<h1>Réaliser une transaction</h1>
+<h1>Réaliser un virement</h1>
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Valider la transaction') }}</button>
+    <button class="btn">{{ button_label|default('Valider le virement') }}</button>
 {{ form_end(form) }}
 {% endblock %}
