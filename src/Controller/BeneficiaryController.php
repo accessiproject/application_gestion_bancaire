@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Beneficiary;
 use App\Repository\BeneficiaryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 class BeneficiaryController extends AbstractController
 {
@@ -22,4 +24,17 @@ class BeneficiaryController extends AbstractController
 			'beneficiaries' => $beneficiaries,
         ]);
     }
+	
+		    /**
+     * @Route("/customer/beneficiary/delete/{id}", name="beneficiary_delete")
+     */
+    public function beneficiary_delete($id, Request $request, EntityManagerInterface $manager)
+    {
+        $beneficiary = $manager->getRepository(Beneficiary::class)->find($id);
+		$user = $beneficiary->getUser();
+        $manager->remove($beneficiary);
+        $manager->flush();
+        return $this->redirectToRoute('beneficiary_list', [ 'id' => $user->getId() ]);
+    }
+
 }
